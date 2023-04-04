@@ -25,7 +25,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import styled from "styled-components";
 import { prodUrl } from "../../config";
-import { user } from "../../localStore";
+// import { user } from "../../localStore";
 import { clubs } from "../../data";
 import "react-quill/dist/quill.snow.css";
 import "../Quill/TextEditor.css";
@@ -109,6 +109,7 @@ const ClubEvent = () => {
   };
 
   useEffect(() => {
+    const user=localStorage.getItem("user")&&JSON.parse(localStorage.getItem("user"))
     setUser(user);
   }, []);
 
@@ -139,8 +140,11 @@ const ClubEvent = () => {
   // Handle Form Submit
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     setLoading(true);
+    const user=localStorage.getItem("user")&&JSON.parse(localStorage.getItem("user"))
     var myHeaders = new Headers();
+
     myHeaders.append("Authorization", "Bearer " + user.authToken);
     var selectedDate = date.$D + "/" + (date.$M + 1) + "/" + date.$y;
     const hrs =
@@ -512,7 +516,7 @@ const ClubEvent = () => {
             >
               <Paid
                 type="number"
-                paid={isTeamEvent && isTeamEvent}
+                paid={isTeamEvent}
                 name="teamSize"
                 label="Maximum Number of members"
                 // value={teamS}
